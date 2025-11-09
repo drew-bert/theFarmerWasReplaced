@@ -1,6 +1,7 @@
 import Helpers
+import Constants
 
-def use_water(water = 0.3): # 0.3 just seemed to be a good constant rn based on how much water a tile can take
+def use_water(water = Constants.WATER_GAIN_RATE): 
 	tileNotWatered = get_water() <= water
 	isWaterAvailable = num_items(Items.Water) > 0
 	if tileNotWatered and isWaterAvailable:
@@ -25,11 +26,6 @@ def TillEverything():
 def is_over(entity):
 	return get_entity_type() == entity
 
-def reset():
-	Helpers.goTo(0,0)
-	print('Reset time!')
-	HarvestAll()
-	print('All done!')
 
 def HarvestAll():
 	size = get_world_size()
@@ -45,3 +41,9 @@ def HarvestAll():
 		move(North)
 	print('Harvested all! Harvested ', i, ' times!')
 				
+
+def reset():
+	Helpers.goTo(0,0)
+	print('Reset time!')
+	HarvestAll()
+	print('All done!')

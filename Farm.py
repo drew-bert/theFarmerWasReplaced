@@ -34,8 +34,8 @@ def chop(size, entity, water, fertilize = False):
 				plant(entity)
 			else:
 				plant(Entities.Bush)
-			move(East)
-		move(North)
+			move(North)
+		move(East)
 			
 
 def shouldPlantTree(x,y):

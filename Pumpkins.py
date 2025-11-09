@@ -1,5 +1,4 @@
 
-
 # pumpkinssss
 # start at 0,0. 
 # define a 2d grid
@@ -16,6 +15,8 @@
 import Helpers
 import FarmingUtils
 
+def tileReady(entity):
+	return Helpers.is_over(entity) == True
 
 def fillRemainingTiles(size,entity,grid):
 	shouldCheck = True # flag to see if we should continue to check
@@ -26,7 +27,7 @@ def fillRemainingTiles(size,entity,grid):
 				if grid[x][y] == True: # True = need planting
 					anyLeft = True # if ANYTHING needs planting, it should hit this flag
 					Helpers.goTo(x,y) # go to the fucker that needs planting
-					if not FarmingUtils.is_over(entity): # if youre already over a live pumpkin, dont fuck around
+					if not tileReady(entity): # if youre already over a live pumpkin, dont fuck around
 						FarmingUtils.Till() # murder that ground
 						plant(entity) # plant that bitch
 					elif can_harvest(): # if its good to harvest
@@ -36,16 +37,14 @@ def fillRemainingTiles(size,entity,grid):
 	return grid
 
 def plantPumpkins(size, entity):
-	grid = Helpers.farmGrid(size,False)
+	grid = Helpers.farmGrid(size,False) # initialize grid as all false
 
 	for z in range(2): # control loop
 		for x in range(size): # x loop (outer)
 			for y in range(size): # y loop (inner)
-				if not FarmingUtils.is_over(entity):
-					FarmingUtils.Till()
-					plant(entity)
-					if z > 0:
-						grid[x][y] = True
+				if not FarmingUtils.is_over(entity): # are you over a pumpkin
+					FarmingUtils.Till() # if nay, moider
+					plant(entity) # plant a pumpkie
 				else:
 					grid[x][y] = False
 			move(North)
@@ -53,6 +52,6 @@ def plantPumpkins(size, entity):
 	newGrid = fillRemainingTiles(size,entity,grid)
 	Helpers.goTo(0,0)
 	if True in newGrid:
-		print('oi wtf)')
+		print('oi wtf')
 	else:
 		FarmingUtils.HarvestAll()
