@@ -1,4 +1,3 @@
-import Helpers
 
 
 # pumpkinssss
@@ -13,6 +12,10 @@ import Helpers
 #	if you can harvest it, DONT, instead set that tile to false (harvest)
 #	at the end of the x/y loop, set the shouldcheck to true so it doesnt loop forever
 # then just harvest by default in the main pumpkin function - the grid should be entirely planted with pumpkins after the fill
+
+import Helpers
+import FarmingUtils
+
 
 def fillRemainingTiles(size,entity,grid):
 	shouldCheck = True # flag to see if we should continue to check
@@ -30,6 +33,7 @@ def fillRemainingTiles(size,entity,grid):
 						grid[x][y] = False # DO NOT HARVEST, set the grid value to false (harvest)
 		if anyLeft == False: # this should only be false after the drone checks the whole grid
 			shouldCheck = False # this will stop the loop
+	return grid
 
 def plantPumpkins(size, entity):
 	grid = Helpers.farmGrid(size,False)
@@ -46,5 +50,9 @@ def plantPumpkins(size, entity):
 					grid[x][y] = False
 			move(North)
 		move(East)
-	fillRemainingTiles(size,entity,grid)
+	newGrid = fillRemainingTiles(size,entity,grid)
 	Helpers.goTo(0,0)
+	if True in newGrid:
+		print('oi wtf)')
+	else:
+		FarmingUtils.HarvestAll()
