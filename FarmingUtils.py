@@ -7,12 +7,12 @@ def use_water(water = 0.3): # 0.3 just seemed to be a good constant rn based on 
 		use_item(Items.Water)
 		
 def Till(): # this is to replace the lame built in lowercase till 
+	if can_harvest():
+		harvest()
 	if get_entity_type() == Entities.Dead_Pumpkin:
 		till()
 	if get_ground_type() == Grounds.Grassland:
 		till()
-
-  
    
 def TillEverything():
 	sizeX = get_world_size()
@@ -28,11 +28,20 @@ def is_over(entity):
 def reset():
 	Helpers.goTo(0,0)
 	print('Reset time!')
-	for x in range (get_world_size()):
-		for y in range (get_world_size()):
+	HarvestAll()
+	print('All done!')
+
+def HarvestAll():
+	size = get_world_size()
+	i = 0
+	for x in range(size):
+		for y in range(size):
 			if can_harvest():
+				i += 1
 				harvest()
+			else:
+				FarmingUtils.Till()
 			move(East)
 		move(North)
-	print('All done!')
-			
+	print('Harvested all! Harvested ', i, ' times!')
+				
